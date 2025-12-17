@@ -3,7 +3,7 @@
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import {useEffect, useState} from "react";
 import Image from "next/image";
-import {formUrlQuery, removeKeysFromUrlQuery} from "@jsmastery/utils";
+import { formUrlQuery, removeKeysFromUrlQuery } from "@/lib/url";
 
 const SearchInput = () => {
     const pathname = usePathname();
@@ -11,7 +11,7 @@ const SearchInput = () => {
     const searchParams = useSearchParams();
     const query = searchParams.get('topic') || '';
 
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState(query);
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
@@ -34,6 +34,8 @@ const SearchInput = () => {
                 }
             }
         }, 500)
+
+        return () => clearTimeout(delayDebounceFn);
     }, [searchQuery, router, searchParams, pathname]);
 
     return (

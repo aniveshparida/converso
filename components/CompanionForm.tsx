@@ -22,8 +22,9 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import {subjects} from "@/constants";
-import {Textarea} from "@/components/ui/textarea";
-import {createCompanion} from "@/lib/actions/companion.actions";
+// components/ui/textarea.tsx
+import { Textarea } from "@/components/ui/textarea"
+import {createCompanion} from "@/lib/actions/companion.action";
 import {redirect} from "next/navigation";
 
 const formSchema = z.object({
@@ -36,7 +37,7 @@ const formSchema = z.object({
 })
 
 const CompanionForm = () => {
-    const form = useForm<z.infer<typeof formSchema>>({
+    const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: '',
@@ -203,6 +204,7 @@ const CompanionForm = () => {
                                     type="number"
                                     placeholder="15"
                                     {...field}
+                                    value={field.value as number | string | undefined}
                                     className="input"
                                 />
                             </FormControl>

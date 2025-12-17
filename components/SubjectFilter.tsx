@@ -6,11 +6,10 @@ import {
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "./ui/select";
+} from "@/components/ui/select";
 import { subjects } from "@/constants";
-import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
-import { formUrlQuery, removeKeysFromUrlQuery } from "@jsmastery/utils";
+import { useRouter, useSearchParams } from "next/navigation";
+import { formUrlQuery, removeKeysFromUrlQuery } from "@/lib/url";
 
 const SubjectFilter = () => {
     const router = useRouter();

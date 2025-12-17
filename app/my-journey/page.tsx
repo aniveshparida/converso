@@ -3,18 +3,18 @@ import {
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
-  } from "@/components/ui/accordion";
-  import { currentUser } from "@clerk/nextjs/server";
-  import { redirect } from "next/navigation";
-  import {
+} from "@/components/ui/accordion";
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import {
     getUserCompanions,
     getUserSessions,
     getBookmarkedCompanions,
-  } from "@/lib/actions/companion.actions";
-  import Image from "next/image";
-  import CompanionsList from "@/components/CompanionsList";
-  
-  const Profile = async () => {
+} from "@/lib/actions/companion.action";
+import Image from "next/image";
+import CompanionsList from "@/components/CompanionsList";
+
+const Profile = async () => {
     const user = await currentUser();
   
     if (!user) redirect("/sign-in");
