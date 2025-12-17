@@ -49,9 +49,12 @@ export const getCompanion = async (id: string) => {
         .select()
         .eq('id', id);
 
-    if(error) return console.log(error);
+    if (error) {
+      console.error("Error fetching companion", error.message);
+      return null;
+    }
 
-    return data[0];
+    return data?.[0] ?? null;
 }
 
 export const addToSessionHistory = async (companionId: string) => {
@@ -76,9 +79,12 @@ export const getRecentSessions = async (limit = 10) => {
         .order('created_at', { ascending: false })
         .limit(limit)
 
-    if(error) throw new Error(error.message);
+    if (error) {
+      console.error("Error fetching recent sessions", error.message);
+      return [];
+    }
 
-    return data.map(({ companions }) => companions);
+    return (data ?? []).map(({ companions }) => companions);
 }
 
 export const getUserSessions = async (userId: string, limit = 10) => {
@@ -90,9 +96,12 @@ export const getUserSessions = async (userId: string, limit = 10) => {
         .order('created_at', { ascending: false })
         .limit(limit)
 
-    if(error) throw new Error(error.message);
+    if (error) {
+      console.error("Error fetching user sessions", error.message);
+      return [];
+    }
 
-    return data.map(({ companions }) => companions);
+    return (data ?? []).map(({ companions }) => companions);
 }
 
 export const getUserCompanions = async (userId: string) => {
@@ -102,9 +111,12 @@ export const getUserCompanions = async (userId: string) => {
         .select()
         .eq('author', userId)
 
-    if(error) throw new Error(error.message);
+    if (error) {
+      console.error("Error fetching user companions", error.message);
+      return [];
+    }
 
-    return data;
+    return data ?? [];
 }
 
 export const newCompanionPermissions = async () => {
@@ -179,8 +191,9 @@ export const getBookmarkedCompanions = async (userId: string) => {
     .select(`companions:companion_id (*)`) // Notice the (*) to get all the companion data
     .eq("user_id", userId);
   if (error) {
-    throw new Error(error.message);
+    console.error("Error fetching bookmarked companions", error.message);
+    return [];
   }
   // We don't need the bookmarks data, so we return only the companions
-  return data.map(({ companions }) => companions);
+  return (data ?? []).map(({ companions }) => companions);
 };
